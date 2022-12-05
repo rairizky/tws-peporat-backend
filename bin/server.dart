@@ -23,9 +23,9 @@ final _router = Router()
 Future<MySqlConnection> connection() async {
   var settings = new ConnectionSettings(
       host: 'localhost',
-      port: 3306,
+      port: 8889,
       user: 'root',
-      password: null,
+      password: 'root',
       db: 'peporat_backend');
   var conn = await MySqlConnection.connect(settings);
 
@@ -97,8 +97,7 @@ Future<Response> _getListReports(Request req) async {
 
   var withDeleted = data["with_deleted"];
   if (withDeleted) {
-    var reports = await conn.query(
-        "SELECT * FROM reports WHERE deleted_at IS NOT NULL ORDER BY id DESC");
+    var reports = await conn.query("SELECT * FROM reports ORDER BY id DESC");
     return Response.ok(reports.toString());
   }
 
